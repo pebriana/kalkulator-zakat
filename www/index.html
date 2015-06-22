@@ -1,1 +1,193 @@
+<html>
+<head>
+<title>Kalkulator Zakat</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+    .blue {
+        color:blue;
+    }
+    .red {
+        color:red;
+    }
+    .green {
+        color:green;
+    }
+</style>
+</head>
+<body>
+<div class="row-fluid">
+    <div class="col-xs-12">
+        <ul class="nav nav-tabs nav-justified">
+            <li role="presentation" class="active"><a href="index.html">Zakat Profesi</a></li>
+            <li role="presentation"><a href="maal.html">Zakat Maal</a></li>
+            <li role="presentation"><a href="about.html">About</a></li>
+        </ul>
+    </div>
+    <div class="col-xs-12">
+    <h4 class="page-header">Hitung Zakat Profesi</h4>
+        <form class="active-form">
+        <div class="form-group">
+            <label for="pendapatan">Pendapatan/gaji (per bulan)</label>
 
+            <div class="input-group">
+                <div class="input-group-addon">Rp.</div>
+                <input class="form-control" type="text" value="0" name="pendapatan" id="pendapatan" /> 
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="pendapatan_lain">Pendapatan lainnya</label>
+
+            <div class="input-group">
+                <div class="input-group-addon">Rp.</div>
+            <input  class="form-control" type="text" value="0" name="pendapatan_lain" id="pendapatan_lain" /> 
+            </div>
+        </div>
+        <div class="form-group">
+
+            <label for="jumlah_total">Jumlah total</label>
+            <div class="input-group">
+                <div class="input-group-addon">Rp.</div>
+                <input class="form-control"  disabled="disabled" type="text" value="0" name="jumlah_total" id="jumlah_total" /> 
+        </div>
+
+        </div>
+        <div class="form-group">
+
+            <label for="nishab">Nishab (setara 653 kg beras)</label>
+            <div class="input-group">
+                <div class="input-group-addon">Rp.</div>
+                <input  class="form-control" type="text" value="3265000" name="nishab" id="nishab" />
+        </div>
+
+        </div>
+        <div class="form-group">
+
+            <label for="harga_beras">Harga beras per kilogram</label>
+
+            <div class="input-group">
+                <div class="input-group-addon">Rp.</div>
+
+                <select name="harga_beras" id="harga_beras"  class="form-control" >
+                <option value="5000">5000</option><option value="5500">5500</option><option value="6000">6000</option><option value="6500">6500</option><option value="7000">7000</option><option value="7500">7500</option><option value="8000">8000</option><option value="8500">8500</option><option value="9000">9000</option><option value="9500">9500</option><option value="10000" selected>10000</option><option value="10500">10500</option><option value="11000">11000</option><option value="11500">11500</option><option value="12000">12000</option><option value="12500">12500</option><option value="13000">13000</option><option value="13500">13500</option><option value="14000">14000</option><option value="14500">14500</option><option value="15000">15000</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="form-group">
+
+            <label for="wajib_zakat">Wajib membayar zakat profesi?</label>
+            <strong id="wajib_zakat_tidak" class="em red">tidak</strong>
+            <strong id="wajib_zakat_ya" class="em blue">ya</strong>
+        </div>
+
+        <div class="form-group">
+            
+            <div id="zakat_anda">
+                <p><label for="zakat_anda">Zakat Anda</label> Rp. <strong class="em blue" id="zakat_anda_val"></strong></p>
+            </div>
+            <p id="wajib_zakat_info_tidak" class="red">Anda dapat membersihkan harta dengan mengeluarkan infak / sedekah hingga mensucikan jiwa</p>
+            <p id="wajib_zakat_info_ya" class="blue">Semoga Allah memberikan pahala atas harta yang di zakati dan memberkahi harta yang tersisa</p>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+/*<![CDATA[*/
+    $(document).ready(function(){
+        $("#wajib_zakat_ya,#wajib_zakat_info_ya,#wajib_zakat_tidak2,#wajib_zakat_info_tidak2,#zakat_anda").hide();
+        $("#wajib_zakat_tidak,#wajib_zakat_info_tidak,#wajib_zakat_ya2,#wajib_zakat_info_ya2").hide();
+        
+ 
+        $("#pendapatan, #pendapatan_lain").blur(function(){
+            hitungZakatPenghasilan();
+        });
+
+        $("#simpanan, #deposito, #perhiasan_emas").blur(function(){
+            hitungZakatMaal();
+        })
+
+        $("#pendapatan, #pendapatan_lain, #simpanan, #deposito, #perhiasan_emas").keypress(function (e)
+        {
+        //if the letter is not digit then display error and donâ€™t type anything
+        if(e.which!=8 && e.which!=0 && (e.which<48 || e.which>57))
+        {
+        return false;
+        }
+        }).blur(function(){
+            if($.trim($(this).val())=="")
+                $(this).val(0);
+        }).focus(function(){
+            if($(this).val()==0)
+                $(this).val("");
+        });
+
+        $("#harga_beras").change(function(){
+            var price = parseInt($(this).val());
+            $("#nishab").val(653 * price);
+            hitungZakatPenghasilan();
+        });
+
+        $("#harga_emas").change(function(){
+            var price = parseInt($(this).val());
+            $("#nishab2").val(85 * price);
+            hitungZakatMaal();
+        });
+
+    });
+
+function hitungZakatPenghasilan(){
+    var pendapatan = parseInt($("#pendapatan").val());
+    if(isNaN(pendapatan))pendapatan = 0;
+    var pendapatanLain = parseInt($("#pendapatan_lain").val());
+    if(isNaN(pendapatanLain))pendapatanLain = 0;
+    var jumlahTotal = pendapatan + pendapatanLain;
+    var nishab = parseInt($("#nishab").val());
+
+    if(isNaN(jumlahTotal))jumlahTotal=0;
+    $("#jumlah_total").val(jumlahTotal);
+
+    if(jumlahTotal >= nishab){
+        $("#wajib_zakat_ya,#wajib_zakat_info_ya").show();
+        $("#wajib_zakat_tidak,#wajib_zakat_info_tidak").hide();
+        $("#zakat_anda").show();
+        $("#zakat_anda_val").show();
+        $("#zakat_anda_val").text(0.025 * jumlahTotal);
+    } else {
+        $("#wajib_zakat_tidak,#wajib_zakat_info_tidak").show();
+        $("#wajib_zakat_ya,#wajib_zakat_info_ya").hide();
+        $("#zakat_anda").hide();
+    }
+}
+
+function hitungZakatMaal(){
+    var simpanan = parseInt($("#simpanan").val());
+    if(isNaN(simpanan))simpanan = 0;
+    var deposito = parseInt($("#deposito").val());
+    if(isNaN(deposito))deposito = 0;
+    var perhiasanEmas = parseInt($("#perhiasan_emas").val());
+    if(isNaN(perhiasanEmas))perhiasanEmas = 0;
+    var jumlahTotal = simpanan + deposito + perhiasanEmas;
+    var nishab = parseInt($("#nishab2").val());
+
+    if(isNaN(jumlahTotal))jumlahTotal=0;
+    $("#jumlah_total2").val(jumlahTotal);
+    if(jumlahTotal >= nishab) {
+        $("#wajib_zakat_ya2,#wajib_zakat_info_ya2").show();
+        $("#wajib_zakat_tidak2,#wajib_zakat_info_tidak2").hide();
+        $("#zakat_anda2").show();
+        $("#zakat_anda_val2").text(0.025 * jumlahTotal);
+    } else {
+        $("#wajib_zakat_tidak2,#wajib_zakat_info_tidak2").show();
+        $("#wajib_zakat_ya2,#wajib_zakat_info_ya2").hide();
+        $("#zakat_anda2").hide();
+    }
+}
+
+/*]]>*/
+</script>
+</body>
+</html>
