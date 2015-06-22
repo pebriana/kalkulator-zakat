@@ -1,8 +1,9 @@
 <html>
 <head>
 <title>Kalkulator Zakat</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<script src="./scripts/jquery-2.1.4.min.js"></script>
+<link href="./scripts/bootstrap.min.css" rel="stylesheet">
+
 <style type="text/css">
     .blue {
         color:blue;
@@ -93,9 +94,8 @@
         </div>
 
         <div class="form-group">
-            <div class="row dark right hidden" id="zakat_anda2">
-            <label for="zakat_anda2">Zakat Anda</label>            Rp. <strong class="em blue form-control" id="zakat_anda_val2"></strong>
-            <div class="clear"></div>
+            <div class="row dark right " id="zakat_anda2">
+            <p><label for="zakat_anda2">Zakat Anda</label> Rp. <strong class="em blue" id="zakat_anda_val2"></strong></p>
             </div>
             <p id="wajib_zakat_info_tidak2" class="red">Anda dapat membersihkan harta dengan mengeluarkan infak / sedekah hingga mensucikan jiwa</p>
             <p id="wajib_zakat_info_ya2" class="blue">Semoga Allah memberikan pahala atas harta yang di zakati dan memberkahi harta yang tersisa</p>
@@ -145,33 +145,6 @@
             var price = parseInt($(this).val());
             $("#nishab2").val(85 * price);
             hitungZakatMaal();
-        });
-
-
-        $("#main-content-tab a").click(function(){
-            var target=$(this).attr("href");
-            if($(target).is(":visible"))
-                return false;
-
-            $("#main-content-tab a").removeClass("active").addClass("nonactive");
-            $(this).addClass("active").removeClass("nonactive");
-            $(".tabbed").hide();
-            $(target).fadeIn(200);
-            return false;
-        });
-
-
-        $(".account-list-span[rel=account-type-0]").addClass("current");
-        $("#account-type-0").removeClass("hidden");
-
-        $(".account-list-span").click(function(){
-            $(".account-list-span").removeClass("current");
-            $(this).addClass("current");
-            var target=$(this).attr("rel");
-            $(".account-type-list").hide();
-            $("#"+target).fadeIn(100);
-
-            return false;
         });
 
     });
