@@ -2,11 +2,11 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "web.id.pebriana.kalkulator-zakat"
-        version   = "0.6.5">
-    <name>MuslimTalk Radio</name>
+        version   = "0.1.0">
+    <name>Kalkulator Zakat</name>
 
     <description>
-        MuslimTalk Radio. Menggugah Nurani Menebar Peduli
+        Kalkulator zakat dapat membantu anda dalam menghitung zakat profesi, zakat maal, seberapa besar zakat yang harus anda keluarkan dari Harta.
     </description>
 
     <author href="http://pebriana.web.id/" email="disamping@gmail.com">
@@ -14,6 +14,7 @@
     </author>
     
     <access origin="pebriana.web.id" subdomains="true" />
+    <access origin="jadwal-imsak.com" subdomains="true" />
 
     <feature name="http://api.phonegap.com/1.0/device" />
 
