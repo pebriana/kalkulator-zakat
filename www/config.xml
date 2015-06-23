@@ -12,9 +12,6 @@
     <author href="http://pebriana.web.id/" email="disamping@gmail.com">
         A Pebriana
     </author>
-    
-    <access origin="pebriana.web.id" subdomains="true" />
-    <access origin="jadwal-imsak.com" subdomains="true" />
 
     <feature name="http://api.phonegap.com/1.0/device" />
 
